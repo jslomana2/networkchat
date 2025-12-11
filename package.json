@@ -68,7 +68,12 @@
       }
     ],
     "win": {
-      "target": ["nsis"]
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ]
     },
     "mac": {
       "target": ["dmg"]
@@ -76,10 +81,6 @@
     "linux": {
       "target": ["AppImage"],
       "category": "Utility"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
     }
   }
 }
