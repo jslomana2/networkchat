@@ -53,8 +53,7 @@
     "appId": "com.ticketing.network",
     "productName": "Network Ticketing",
     "directories": {
-      "output": "release",
-      "buildResources": "build"
+      "output": "release"
     },
     "files": [
       "dist/**/*",
