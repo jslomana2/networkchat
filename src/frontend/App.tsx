@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { Ticket, Part } from './types';
-import { ticketsApi, partsApi } from './api';
+import { Ticket, Part, User } from './types';
+import { ticketsApi, partsApi, usersApi } from './api';
 import TicketList from './components/TicketList';
 import TicketDetail from './components/TicketDetail';
 import CreateTicketModal from './components/CreateTicketModal';
@@ -11,6 +11,7 @@ let socket: Socket;
 
 function App() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [parts, setParts] = useState<Part[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -62,7 +63,22 @@ function App() {
       setParts((prev) => prev.filter((p) => p.id !== partId));
     });
 
+    socket.on('user:created', (user: User) => {
+      setUsers((prev) => [...prev, user]);
+    });
+
+    socket.on('user:updated', (updatedUser: User) => {
+      setUsers((prev) =>
+        prev.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+      );
+    });
+
+    socket.on('user:deleted', (userId: string) => {
+      setUsers((prev) => prev.filter((u) => u.id !== userId));
+    });
+
     loadTickets();
+    loadUsers();
 
     return () => {
       socket.disconnect();
@@ -88,6 +104,15 @@ function App() {
       console.error('Error al cargar tickets:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadUsers = async () => {
+    try {
+      const data = await usersApi.getAll();
+      setUsers(data);
+    } catch (error) {
+      console.error('Error al cargar usuarios:', error);
     }
   };
 
@@ -230,6 +255,7 @@ function App() {
         <CreateTicketModal
           onClose={() => setIsCreateModalOpen(false)}
           onCreate={handleCreateTicket}
+          users={users}
         />
       )}
     </div>
