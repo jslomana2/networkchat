@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { User } from '../types';
 
 interface CreateTicketModalProps {
   onClose: () => void;
@@ -6,11 +7,12 @@ interface CreateTicketModalProps {
     title: string;
     description: string;
     priority: string;
-    assigned_to?: string;
+    assigned_to: string;
   }) => void;
+  users: User[];
 }
 
-const CreateTicketModal: React.FC<CreateTicketModalProps> = ({ onClose, onCreate }) => {
+const CreateTicketModal: React.FC<CreateTicketModalProps> = ({ onClose, onCreate, users }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -20,11 +22,8 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({ onClose, onCreate
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.title.trim() && formData.description.trim()) {
-      onCreate({
-        ...formData,
-        assigned_to: formData.assigned_to || undefined,
-      });
+    if (formData.title.trim() && formData.description.trim() && formData.assigned_to) {
+      onCreate(formData);
     }
   };
 
@@ -84,15 +83,21 @@ const CreateTicketModal: React.FC<CreateTicketModalProps> = ({ onClose, onCreate
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Asignar a (opcional)
+                  Asignar a *
                 </label>
-                <input
-                  type="text"
+                <select
                   value={formData.assigned_to}
                   onChange={(e) => setFormData({ ...formData, assigned_to: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="Nombre del técnico"
-                />
+                  required
+                >
+                  <option value="">Seleccionar usuario...</option>
+                  {users.map((user) => (
+                    <option key={user.id} value={user.name}>
+                      {user.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
