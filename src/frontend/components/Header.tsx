@@ -4,9 +4,10 @@ interface HeaderProps {
   currentUser: string;
   onUserChange: (user: string) => void;
   onCreateTicket: () => void;
+  onManageUsers: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentUser, onUserChange, onCreateTicket }) => {
+const Header: React.FC<HeaderProps> = ({ currentUser, onUserChange, onCreateTicket, onManageUsers }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [tempUser, setTempUser] = useState(currentUser);
 
@@ -65,6 +66,13 @@ const Header: React.FC<HeaderProps> = ({ currentUser, onUserChange, onCreateTick
               </button>
             )}
           </div>
+
+          <button
+            onClick={onManageUsers}
+            className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium"
+          >
+            👥 Usuarios
+          </button>
 
           <button
             onClick={onCreateTicket}

@@ -5,6 +5,7 @@ import { ticketsApi, partsApi, usersApi } from './api';
 import TicketList from './components/TicketList';
 import TicketDetail from './components/TicketDetail';
 import CreateTicketModal from './components/CreateTicketModal';
+import UserManagementModal from './components/UserManagementModal';
 import Header from './components/Header';
 
 let socket: Socket;
@@ -15,6 +16,7 @@ function App() {
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [parts, setParts] = useState<Part[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isUserManagementOpen, setIsUserManagementOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<{ status?: string; priority?: string }>({});
   const [currentUser, setCurrentUser] = useState('Usuario');
@@ -220,12 +222,35 @@ function App() {
     }
   };
 
+  const handleCreateUser = async (data: any) => {
+    try {
+      const user = await usersApi.create(data);
+      socket.emit('user:created', user);
+      setUsers([...users, user]);
+    } catch (error: any) {
+      console.error('Error al crear usuario:', error);
+      alert(error.message || 'Error al crear usuario');
+    }
+  };
+
+  const handleDeleteUser = async (id: string) => {
+    try {
+      await usersApi.delete(id);
+      socket.emit('user:deleted', id);
+      setUsers(users.filter((u) => u.id !== id));
+    } catch (error: any) {
+      console.error('Error al eliminar usuario:', error);
+      alert(error.message || 'Error al eliminar usuario');
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <Header
         currentUser={currentUser}
         onUserChange={setCurrentUser}
         onCreateTicket={() => setIsCreateModalOpen(true)}
+        onManageUsers={() => setIsUserManagementOpen(true)}
       />
 
       <div className="flex-1 flex overflow-hidden">
@@ -256,6 +281,15 @@ function App() {
           onClose={() => setIsCreateModalOpen(false)}
           onCreate={handleCreateTicket}
           users={users}
+        />
+      )}
+
+      {isUserManagementOpen && (
+        <UserManagementModal
+          onClose={() => setIsUserManagementOpen(false)}
+          users={users}
+          onCreateUser={handleCreateUser}
+          onDeleteUser={handleDeleteUser}
         />
       )}
     </div>
