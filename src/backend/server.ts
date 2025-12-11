@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import ticketsRouter from './routes/tickets';
 import partsRouter from './routes/parts';
+import usersRouter from './routes/users';
 
 const app = express();
 const httpServer = createServer(app);
@@ -23,6 +24,7 @@ app.use(express.json());
 // Routes
 app.use('/api/tickets', ticketsRouter);
 app.use('/api/parts', partsRouter);
+app.use('/api/users', usersRouter);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -55,6 +57,18 @@ io.on('connection', (socket) => {
 
   socket.on('part:deleted', (partId) => {
     socket.broadcast.emit('part:deleted', partId);
+  });
+
+  socket.on('user:created', (user) => {
+    socket.broadcast.emit('user:created', user);
+  });
+
+  socket.on('user:updated', (user) => {
+    socket.broadcast.emit('user:updated', user);
+  });
+
+  socket.on('user:deleted', (userId) => {
+    socket.broadcast.emit('user:deleted', userId);
   });
 
   socket.on('disconnect', () => {

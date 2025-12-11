@@ -1,3 +1,11 @@
+export interface User {
+  id: string;
+  name: string;
+  email: string | null;
+  role: 'admin' | 'technician';
+  created_at: number;
+}
+
 export interface Ticket {
   id: string;
   title: string;
@@ -5,7 +13,7 @@ export interface Ticket {
   status: 'open' | 'in_progress' | 'resolved' | 'closed';
   priority: 'low' | 'medium' | 'high' | 'urgent';
   created_by: string;
-  assigned_to: string | null;
+  assigned_to: string;
   created_at: number;
   updated_at: number;
   closed_at: number | null;
@@ -25,7 +33,7 @@ export interface CreateTicketData {
   description: string;
   priority: 'low' | 'medium' | 'high' | 'urgent';
   created_by: string;
-  assigned_to?: string;
+  assigned_to: string;
 }
 
 export interface UpdateTicketData {
@@ -40,4 +48,16 @@ export interface CreatePartData {
   ticket_id: string;
   content: string;
   created_by: string;
+}
+
+export interface CreateUserData {
+  name: string;
+  email?: string;
+  role?: 'admin' | 'technician';
+}
+
+export interface UpdateUserData {
+  name?: string;
+  email?: string;
+  role?: 'admin' | 'technician';
 }

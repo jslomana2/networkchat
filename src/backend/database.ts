@@ -11,6 +11,14 @@ const db = new Database(dbPath);
 
 // Crear tablas
 db.exec(`
+  CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE,
+    email TEXT,
+    role TEXT NOT NULL DEFAULT 'technician',
+    created_at INTEGER NOT NULL
+  );
+
   CREATE TABLE IF NOT EXISTS tickets (
     id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
@@ -18,10 +26,11 @@ db.exec(`
     status TEXT NOT NULL DEFAULT 'open',
     priority TEXT NOT NULL DEFAULT 'medium',
     created_by TEXT NOT NULL,
-    assigned_to TEXT,
+    assigned_to TEXT NOT NULL,
     created_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL,
-    closed_at INTEGER
+    closed_at INTEGER,
+    FOREIGN KEY (assigned_to) REFERENCES users(name)
   );
 
   CREATE TABLE IF NOT EXISTS parts (
@@ -36,10 +45,20 @@ db.exec(`
 
   CREATE INDEX IF NOT EXISTS idx_tickets_status ON tickets(status);
   CREATE INDEX IF NOT EXISTS idx_tickets_created_at ON tickets(created_at DESC);
+  CREATE INDEX IF NOT EXISTS idx_tickets_assigned_to ON tickets(assigned_to);
   CREATE INDEX IF NOT EXISTS idx_parts_ticket_id ON parts(ticket_id);
+  CREATE INDEX IF NOT EXISTS idx_users_name ON users(name);
 `);
 
 export default db;
+
+export interface User {
+  id: string;
+  name: string;
+  email: string | null;
+  role: 'admin' | 'technician';
+  created_at: number;
+}
 
 export interface Ticket {
   id: string;
@@ -48,7 +67,7 @@ export interface Ticket {
   status: 'open' | 'in_progress' | 'resolved' | 'closed';
   priority: 'low' | 'medium' | 'high' | 'urgent';
   created_by: string;
-  assigned_to: string | null;
+  assigned_to: string;
   created_at: number;
   updated_at: number;
   closed_at: number | null;

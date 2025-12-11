@@ -1,4 +1,4 @@
-import { Ticket, Part, CreateTicketData, UpdateTicketData, CreatePartData } from './types';
+import { Ticket, Part, User, CreateTicketData, UpdateTicketData, CreatePartData, CreateUserData, UpdateUserData } from './types';
 
 const API_URL = 'http://localhost:3001/api';
 
@@ -88,5 +88,55 @@ export const partsApi = {
       method: 'DELETE',
     });
     if (!response.ok) throw new Error('Error al eliminar parte');
+  },
+};
+
+export const usersApi = {
+  getAll: async (): Promise<User[]> => {
+    const response = await fetch(`${API_URL}/users`);
+    if (!response.ok) throw new Error('Error al obtener usuarios');
+    return response.json();
+  },
+
+  getById: async (id: string): Promise<User> => {
+    const response = await fetch(`${API_URL}/users/${id}`);
+    if (!response.ok) throw new Error('Error al obtener usuario');
+    return response.json();
+  },
+
+  create: async (data: CreateUserData): Promise<User> => {
+    const response = await fetch(`${API_URL}/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Error al crear usuario');
+    }
+    return response.json();
+  },
+
+  update: async (id: string, data: UpdateUserData): Promise<User> => {
+    const response = await fetch(`${API_URL}/users/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Error al actualizar usuario');
+    }
+    return response.json();
+  },
+
+  delete: async (id: string): Promise<void> => {
+    const response = await fetch(`${API_URL}/users/${id}`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Error al eliminar usuario');
+    }
   },
 };
