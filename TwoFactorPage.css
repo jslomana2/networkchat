@@ -1,0 +1,801 @@
+/**
+ * TwoFactorPage.css - Enterprise 2FA Design
+ * Split-panel layout con branding TankFuel GlassOS 2.0
+ */
+
+/* ============================================================
+   RESET
+============================================================ */
+.twofa-page *,
+.twofa-page *::before,
+.twofa-page *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   PAGE
+============================================================ */
+.twofa-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  background: #050816;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   ANIMATED BACKGROUND
+============================================================ */
+.twofa-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.twofa-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+}
+
+.twofa-bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  animation: twofaGlow 15s ease-in-out infinite;
+}
+
+.twofa-bg-glow-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.4), transparent 70%);
+  top: -200px;
+  left: -100px;
+}
+
+.twofa-bg-glow-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(123, 92, 255, 0.3), transparent 70%);
+  bottom: -150px;
+  right: -50px;
+  animation-delay: 5s;
+}
+
+.twofa-bg-glow-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 10s;
+}
+
+@keyframes twofaGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+  33% { transform: translate(20px, -20px) scale(1.05); opacity: 0.4; }
+  66% { transform: translate(-15px, 15px) scale(0.95); opacity: 0.3; }
+}
+
+/* ============================================================
+   CONTAINER - Split layout
+============================================================ */
+.twofa-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  max-width: 960px;
+  min-height: 580px;
+  margin: 24px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(10, 14, 39, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(0, 102, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ============================================================
+   LEFT PANEL - Branding
+============================================================ */
+.twofa-brand-panel {
+  flex: 0 0 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.12) 0%, rgba(123, 92, 255, 0.08) 50%, rgba(0, 212, 255, 0.06) 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.twofa-brand-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(123, 92, 255, 0.1) 0%, transparent 50%);
+}
+
+.twofa-brand-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.twofa-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.twofa-brand-logo img {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+}
+
+.twofa-brand-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.twofa-brand-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #00d4ff;
+  letter-spacing: -0.3px;
+}
+
+.twofa-brand-badge {
+  display: inline-block;
+  width: fit-content;
+  background: linear-gradient(135deg, #00d4ff, #7b5cff);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Shield Icon */
+.twofa-brand-hero {
+  text-align: center;
+}
+
+.twofa-shield-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 20px;
+  color: #0066ff;
+}
+
+.twofa-shield-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(0, 102, 255, 0.3);
+  border-radius: 50%;
+  animation: ringPulse 3s ease-in-out infinite;
+}
+
+.twofa-shield-ring::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(0, 102, 255, 0.15);
+  border-radius: 50%;
+  animation: ringPulse 3s ease-in-out infinite reverse;
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.6; }
+}
+
+.twofa-brand-hero h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+
+.twofa-brand-hero p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #8892b0;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Features */
+.twofa-brand-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.twofa-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #a8b2d1;
+}
+
+.twofa-feature svg {
+  color: #00d4ff;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   RIGHT PANEL - Form
+============================================================ */
+.twofa-form-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  background: rgba(15, 15, 35, 0.4);
+}
+
+/* Mobile brand - hidden on desktop */
+.twofa-mobile-brand {
+  display: none;
+}
+
+/* Lock Icon */
+.twofa-lock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 212, 255, 0.05));
+  border: 1px solid rgba(0, 102, 255, 0.25);
+  color: #0066ff;
+  margin-bottom: 24px;
+  transition: all 0.4s ease;
+}
+
+.twofa-lock-icon.success {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(34, 197, 94, 0.05));
+  border-color: rgba(0, 255, 136, 0.3);
+  color: #00ff88;
+}
+
+/* Form Header */
+.twofa-form-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.twofa-form-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.twofa-form-header p {
+  font-size: 14px;
+  color: #8892b0;
+  line-height: 1.5;
+}
+
+/* User Badge */
+.twofa-user-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  margin-bottom: 28px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.twofa-user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0066ff, #7b5cff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.twofa-user-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.twofa-user-label {
+  font-size: 11px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.twofa-user-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e8e8f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   FORM
+============================================================ */
+.twofa-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 340px;
+}
+
+/* Alerts */
+.twofa-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.twofa-alert-error {
+  background: rgba(255, 51, 102, 0.1);
+  border: 1px solid rgba(255, 51, 102, 0.25);
+  color: #ff6b8a;
+}
+
+.twofa-alert-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 51, 102, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #ff3366;
+  flex-shrink: 0;
+}
+
+.twofa-alert-success {
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  color: #00ff88;
+}
+
+.twofa-alert-success svg {
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   CODE INPUT
+============================================================ */
+.twofa-code-wrapper {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.twofa-code-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+  font-size: 24px;
+  cursor: pointer;
+  /* iOS: prevent zoom on focus (font-size must be >= 16px) */
+  font-size: max(24px, 16px);
+}
+
+.twofa-code-display {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  /* Prevent iOS text selection on digit boxes */
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+}
+
+.twofa-digit {
+  width: 48px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Monaco', 'Fira Code', monospace;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  transition: all 0.2s ease;
+}
+
+.twofa-digit.active {
+  border-color: #0066ff;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+  background: rgba(0, 102, 255, 0.05);
+}
+
+.twofa-digit.filled {
+  border-color: rgba(0, 212, 255, 0.4);
+  background: rgba(0, 212, 255, 0.08);
+  color: #00d4ff;
+}
+
+/* Progress dots */
+.twofa-progress {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.twofa-progress-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  transition: all 0.25s ease;
+}
+
+.twofa-progress-dot.filled {
+  background: #00d4ff;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+}
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+.twofa-btn-verify {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 24px;
+  background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(0, 102, 255, 0.3);
+  margin-top: 4px;
+}
+
+.twofa-btn-verify:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 102, 255, 0.4);
+}
+
+.twofa-btn-verify:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.twofa-btn-verify:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.twofa-btn-verify.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.twofa-btn-verify.success {
+  background: linear-gradient(135deg, #00c853, #00a844);
+  box-shadow: 0 4px 20px rgba(0, 200, 83, 0.3);
+}
+
+.twofa-btn-cancel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  color: #8892b0;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.twofa-btn-cancel:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #e8e8f0;
+}
+
+.twofa-btn-cancel:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.twofa-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: twofaSpin 0.7s linear infinite;
+}
+
+@keyframes twofaSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+.twofa-form-footer {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.twofa-form-footer p {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.twofa-form-footer strong {
+  color: #00d4ff;
+  font-weight: 600;
+}
+
+.twofa-help-text {
+  font-size: 12px !important;
+  color: #4a5568 !important;
+}
+
+/* ============================================================
+   RESPONSIVE - Tablet
+============================================================ */
+@media (max-width: 900px) {
+  .twofa-container {
+    max-width: 480px;
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .twofa-brand-panel {
+    display: none;
+  }
+
+  .twofa-mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .twofa-mobile-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+  }
+
+  .twofa-mobile-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #00d4ff;
+  }
+
+  .twofa-mobile-badge {
+    background: linear-gradient(135deg, #00d4ff, #7b5cff);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .twofa-form-panel {
+    padding: 36px 28px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE - Mobile
+============================================================ */
+@media (max-width: 480px) {
+  .twofa-container {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+    box-shadow: none;
+    background: rgba(5, 8, 22, 0.95);
+  }
+
+  .twofa-form-panel {
+    padding: 32px 20px;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .twofa-form-header h1 {
+    font-size: 22px;
+  }
+
+  .twofa-digit {
+    width: 42px;
+    height: 54px;
+    font-size: 22px;
+    border-radius: 12px;
+  }
+
+  .twofa-code-display {
+    gap: 6px;
+  }
+
+  .twofa-btn-verify {
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+
+  .twofa-btn-cancel {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE - Small Mobile
+============================================================ */
+@media (max-width: 360px) {
+  .twofa-form-panel {
+    padding: 24px 16px;
+  }
+
+  .twofa-form-header h1 {
+    font-size: 20px;
+  }
+
+  .twofa-digit {
+    width: 36px;
+    height: 48px;
+    font-size: 20px;
+    border-radius: 10px;
+    gap: 5px;
+  }
+
+  .twofa-code-display {
+    gap: 5px;
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY
+============================================================ */
+
+/* Screen reader only text - visualmente oculto pero accesible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible mejorado para accesibilidad */
+.twofa-code-input:focus-visible,
+.twofa-btn-verify:focus-visible,
+.twofa-btn-cancel:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
+}
+
+/* Deshabilitar foco visible solo en mouse */
+.twofa-code-input:focus:not(:focus-visible),
+.twofa-btn-verify:focus:not(:focus-visible),
+.twofa-btn-cancel:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Estado invalid para accesibilidad */
+.twofa-code-input[aria-invalid="true"] {
+  border-color: #ff3366;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .twofa-bg-glow,
+  .twofa-shield-ring,
+  .twofa-shield-ring::after {
+    animation: none;
+  }
+
+  .twofa-digit,
+  .twofa-btn-verify,
+  .twofa-btn-cancel,
+  .twofa-lock-icon,
+  .twofa-progress-dot {
+    transition: none;
+  }
+
+  .twofa-btn-verify:hover:not(:disabled) {
+    transform: none;
+  }
+}

@@ -1,0 +1,848 @@
+/**
+ * TwoFactorSetupPage.css - GlassOS 2.0 Theme
+ * Mismo diseño que TwoFactorPage pero adaptado al wizard de setup
+ */
+
+/* ============================================================
+   RESET
+============================================================ */
+.tfsetup-page *,
+.tfsetup-page *::before,
+.tfsetup-page *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   PAGE
+============================================================ */
+.tfsetup-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  background: #050816;
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   ANIMATED BACKGROUND
+============================================================ */
+.tfsetup-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.tfsetup-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%);
+}
+
+.tfsetup-bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.35;
+  animation: tfsetupGlow 15s ease-in-out infinite;
+}
+
+.tfsetup-bg-glow-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 102, 255, 0.4), transparent 70%);
+  top: -200px;
+  left: -100px;
+}
+
+.tfsetup-bg-glow-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(123, 92, 255, 0.3), transparent 70%);
+  bottom: -150px;
+  right: -50px;
+  animation-delay: 5s;
+}
+
+.tfsetup-bg-glow-3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 10s;
+}
+
+@keyframes tfsetupGlow {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+  33%  { transform: translate(20px, -20px) scale(1.05); opacity: 0.4; }
+  66%  { transform: translate(-15px, 15px) scale(0.95); opacity: 0.3; }
+}
+
+/* ============================================================
+   CONTAINER – split layout
+============================================================ */
+.tfsetup-container {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  margin: 24px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(10, 14, 39, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 0 80px rgba(0, 102, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ============================================================
+   LEFT PANEL – Branding
+============================================================ */
+.tfsetup-brand-panel {
+  flex: 0 0 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 36px;
+  background: linear-gradient(135deg,
+    rgba(0, 102, 255, 0.12) 0%,
+    rgba(123, 92, 255, 0.08) 50%,
+    rgba(0, 212, 255, 0.06) 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.tfsetup-brand-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(123, 92, 255, 0.1) 0%, transparent 50%);
+}
+
+.tfsetup-brand-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.tfsetup-brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tfsetup-brand-logo img {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+}
+
+.tfsetup-brand-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tfsetup-brand-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #00d4ff;
+  letter-spacing: -0.3px;
+}
+
+.tfsetup-brand-badge {
+  display: inline-block;
+  width: fit-content;
+  background: linear-gradient(135deg, #00d4ff, #7b5cff);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.tfsetup-brand-hero {
+  text-align: center;
+}
+
+.tfsetup-shield-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 20px;
+  color: #0066ff;
+}
+
+.tfsetup-shield-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(0, 102, 255, 0.3);
+  border-radius: 50%;
+  animation: tfsetupRingPulse 3s ease-in-out infinite;
+}
+
+.tfsetup-shield-ring::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(0, 102, 255, 0.15);
+  border-radius: 50%;
+  animation: tfsetupRingPulse 3s ease-in-out infinite reverse;
+}
+
+@keyframes tfsetupRingPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.08); opacity: 0.6; }
+}
+
+.tfsetup-brand-hero h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+  letter-spacing: -0.3px;
+}
+
+.tfsetup-brand-hero p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #8892b0;
+}
+
+.tfsetup-brand-features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tfsetup-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #a8b2d1;
+}
+
+.tfsetup-feature svg {
+  color: #00d4ff;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   RIGHT PANEL – Form / Wizard
+============================================================ */
+.tfsetup-form-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 36px;
+  background: rgba(15, 15, 35, 0.4);
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+/* Mobile brand – hidden on desktop */
+.tfsetup-mobile-brand {
+  display: none;
+}
+
+/* Lock/Key icon */
+.tfsetup-lock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 212, 255, 0.05));
+  border: 1px solid rgba(0, 102, 255, 0.25);
+  color: #0066ff;
+  margin-bottom: 20px;
+  transition: all 0.4s ease;
+}
+
+.tfsetup-lock-icon.success {
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(34, 197, 94, 0.05));
+  border-color: rgba(0, 255, 136, 0.3);
+  color: #00ff88;
+}
+
+.tfsetup-form-header {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.tfsetup-form-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+
+.tfsetup-form-header p {
+  font-size: 13px;
+  color: #8892b0;
+}
+
+.tfsetup-form-header strong {
+  color: #00d4ff;
+}
+
+/* ============================================================
+   ALERTS
+============================================================ */
+.tfsetup-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 520px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.tfsetup-alert-error {
+  background: rgba(255, 51, 102, 0.1);
+  border: 1px solid rgba(255, 51, 102, 0.25);
+  color: #ff6b8a;
+}
+
+.tfsetup-alert-success {
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  color: #00ff88;
+}
+
+/* ============================================================
+   STEP PANELS
+============================================================ */
+.tfsetup-step-panel {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Apps info (step 1) */
+.tfsetup-apps-info {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.tfsetup-apps-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.tfsetup-apps-label svg {
+  color: #00d4ff;
+}
+
+.tfsetup-apps-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tfsetup-app-chip {
+  background: rgba(0, 102, 255, 0.08);
+  border: 1px solid rgba(0, 102, 255, 0.2);
+  color: #a8b2d1;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ============================================================
+   WIZARD STEPS (step 2)
+============================================================ */
+.tfsetup-step2 {
+  gap: 16px;
+}
+
+.tfsetup-wizard-step {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.tfsetup-wizard-number {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0066ff, #00d4ff);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.tfsetup-wizard-label {
+  font-size: 13px;
+  color: #a8b2d1;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* QR */
+.tfsetup-qr-box {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.tfsetup-qr-box img {
+  width: 160px;
+  height: 160px;
+  border-radius: 10px;
+  border: 3px solid rgba(0, 212, 255, 0.2);
+  background: white;
+  padding: 4px;
+}
+
+.tfsetup-qr-placeholder {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+}
+
+/* Secret key */
+.tfsetup-secret-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px dashed rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tfsetup-secret-box:hover {
+  background: rgba(0, 212, 255, 0.1);
+}
+
+.tfsetup-secret-box code {
+  font-family: 'SF Mono', 'Monaco', 'Fira Code', monospace;
+  font-size: 13px;
+  color: #00d4ff;
+  letter-spacing: 2px;
+  word-break: break-all;
+}
+
+.tfsetup-secret-box svg {
+  flex-shrink: 0;
+  color: #64748b;
+  transition: color 0.2s;
+}
+
+.tfsetup-secret-box svg.copied {
+  color: #00ff88;
+}
+
+.tfsetup-copied-hint {
+  font-size: 12px;
+  color: #00ff88;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Backup codes */
+.tfsetup-backup-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tfsetup-backup-code {
+  background: rgba(26, 26, 62, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-family: 'SF Mono', 'Monaco', 'Fira Code', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e8e8f0;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   CODE INPUT (step 4)
+============================================================ */
+.tfsetup-verify-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tfsetup-code-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.tfsetup-code-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.tfsetup-code-display {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+.tfsetup-digit {
+  width: 46px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Monaco', 'Fira Code', monospace;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.tfsetup-digit.active {
+  border-color: #0066ff;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+  background: rgba(0, 102, 255, 0.05);
+}
+
+.tfsetup-digit.filled {
+  border-color: rgba(0, 212, 255, 0.4);
+  background: rgba(0, 212, 255, 0.08);
+  color: #00d4ff;
+}
+
+/* ============================================================
+   BUTTONS
+============================================================ */
+.tfsetup-btn-primary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(0, 102, 255, 0.3);
+}
+
+.tfsetup-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 102, 255, 0.4);
+}
+
+.tfsetup-btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.tfsetup-btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.tfsetup-btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #8892b0;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tfsetup-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #e8e8f0;
+}
+
+/* ============================================================
+   SPINNER
+============================================================ */
+.tfsetup-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: tfsetupSpin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes tfsetupSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print {
+  .tfsetup-bg,
+  .tfsetup-brand-panel,
+  .tfsetup-btn-primary,
+  .tfsetup-btn-secondary,
+  .tfsetup-lock-icon,
+  .tfsetup-form-header,
+  .tfsetup-wizard-step:not(:nth-child(3)) {
+    display: none !important;
+  }
+
+  .tfsetup-page,
+  .tfsetup-container,
+  .tfsetup-form-panel {
+    background: white;
+    color: black;
+    box-shadow: none;
+    border: none;
+  }
+
+  .tfsetup-backup-code {
+    border: 1px solid #ccc;
+    color: #000;
+    background: white;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE – Tablet
+============================================================ */
+@media (max-width: 900px) {
+  .tfsetup-container {
+    flex-direction: column;
+    max-width: 520px;
+    max-height: none;
+    margin: 12px;
+  }
+
+  .tfsetup-brand-panel {
+    display: none;
+  }
+
+  .tfsetup-mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .tfsetup-mobile-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+  }
+
+  .tfsetup-mobile-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #00d4ff;
+  }
+
+  .tfsetup-mobile-badge {
+    background: linear-gradient(135deg, #00d4ff, #7b5cff);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .tfsetup-form-panel {
+    padding: 32px 24px;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE – Mobile
+============================================================ */
+@media (max-width: 480px) {
+  .tfsetup-container {
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: rgba(5, 8, 22, 0.98);
+  }
+
+  .tfsetup-form-panel {
+    padding: 28px 16px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .tfsetup-form-header h1 { font-size: 20px; }
+
+  .tfsetup-digit {
+    width: 38px;
+    height: 48px;
+    font-size: 20px;
+    border-radius: 10px;
+  }
+
+  .tfsetup-code-display { gap: 5px; }
+
+  .tfsetup-backup-grid { grid-template-columns: 1fr; }
+
+  .tfsetup-qr-box img,
+  .tfsetup-qr-placeholder {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY
+============================================================ */
+
+/* Screen reader only text - visualmente oculto pero accesible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible mejorado para accesibilidad */
+.tfsetup-code-input:focus-visible,
+.tfsetup-btn-primary:focus-visible,
+.tfsetup-btn-secondary:focus-visible,
+.tfsetup-secret-box:focus-visible {
+  outline: 2px solid #00d4ff;
+  outline-offset: 2px;
+}
+
+/* Deshabilitar foco visible solo en mouse */
+.tfsetup-code-input:focus:not(:focus-visible),
+.tfsetup-btn-primary:focus:not(:focus-visible),
+.tfsetup-btn-secondary:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Estado invalid para accesibilidad */
+.tfsetup-code-input[aria-invalid="true"] {
+  border-color: #ff3366;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tfsetup-bg-glow,
+  .tfsetup-shield-ring,
+  .tfsetup-shield-ring::after {
+    animation: none;
+  }
+
+  .tfsetup-btn-primary,
+  .tfsetup-btn-secondary,
+  .tfsetup-digit,
+  .tfsetup-lock-icon {
+    transition: none;
+  }
+
+  .tfsetup-btn-primary:hover:not(:disabled) {
+    transform: none;
+  }
+}
